@@ -18,9 +18,9 @@ contract token {
     }
 };
 
-contract token {mapping (address => uint) public coinBalanceOf; event CoinTransfer(address sender, address receiver, uint amount); function token(uint supply) {if (supply == 0) supply = 10000; coinBalanceOf[msg.sender] = supply;}; function sendCoin(address receiver, uint amount) returns(bool sufficient) {if (coinBalanceOf[msg.sender] < amount) return false; coinBalanceOf[msg.sender] -= amount; coinBalanceOf[receiver] += amount; CoinTransfer(msg.sender, receiver, amount); return true;}};
-
-var supply = 10000;
+var tokenSource = 'contract token {mapping (address => uint) public coinBalanceOf; event CoinTransfer(address sender, address receiver, uint amount); function token(uint supply) {if (supply == 0) supply = 10000; coinBalanceOf[msg.sender] = supply;}; function sendCoin(address receiver, uint amount) returns(bool sufficient) {if (coinBalanceOf[msg.sender] < amount) return false; coinBalanceOf[msg.sender] -= amount; coinBalanceOf[receiver] += amount; CoinTransfer(msg.sender, receiver, amount); return true;}};';
+var tokenCompiled = eth.compile.solidity(tokenSource)
+var supply = 10000
 
 var tokenContract = web3.eth.contract(tokenCompiled.token.info.abiDefinition);
 
